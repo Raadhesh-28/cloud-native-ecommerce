@@ -4,25 +4,27 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out e-commerce application'
+                echo 'Source code retrieved from GitHub'
             }
         }
 
         stage('Build') {
             steps {
                 echo 'Building Docker image'
+                sh 'docker build -t ecommerce-app:latest .'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing e-commerce application'
+                echo 'Running application tests'
+                sh 'docker run --rm ecommerce-app:latest pytest -v'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying e-commerce application'
+                echo 'Docker image successfully built and tested'
             }
         }
     }
